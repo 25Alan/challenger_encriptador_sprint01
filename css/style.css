@@ -1,124 +1,140 @@
 /* El reset de margin/padding/box-sizing ya está en reset.css */
 
 :root {
-  --fondo: hsl(228, 53%, 19%);
-  --verde: hsl(99, 96%, 51%);
-  --verde-oscuro: hsl(99, 80%, 40%);
-  --naranja: hsl(36, 100%, 51%);
-  --negro: hsl(0, 0%, 0%);
-  --blanco: hsl(0, 0%, 100%);
-  --aviso: hsl(50, 100%, 70%);
-  --error: hsl(0, 100%, 75%);
+  color-scheme: light;
+
+  --fondo: #f3f5fc;
+  --superficie: #ffffff;
+  --azul: #0a3871;
+  --azul-hover: #072b57;
+  --azul-suave: #e4ebf7;
+  --texto: #0a3871;
+  --texto-suave: #495057;
+  --borde: #d8dfeb;
+  --aviso: #8a5a00;
+  --error: #c0392b;
+
+  --radio: 24px;
+  --sombra: 0 24px 32px -12px rgba(10, 56, 113, 0.12);
+}
+
+/* reset.css cambia esta variable en modo oscuro; el diseño es solo claro */
+::selection {
+  background-color: var(--azul);
+  color: #fff;
 }
 
 body {
-  background-color: var(--fondo);
-  color: var(--blanco);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--fondo);
+  color: var(--texto);
+  font-family: "Inter", system-ui, sans-serif;
+  line-height: 1.5;
 }
 
-header {
-  padding: 1.5rem 1rem;
-  text-align: center;
-  font-family: "Anek Telugu", sans-serif;
+/* ---------- Encabezado ---------- */
+
+.header {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 0;
 }
 
-header h1 {
-  color: var(--blanco);
-  font-size: clamp(2rem, 8vw, 3rem);
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.logo__icono {
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0.45rem;
+  border-radius: 10px;
+  background-color: var(--azul);
+  color: #fff;
+}
+
+.logo h1 {
+  font-size: 1.4rem;
   font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
-main {
+/* ---------- Layout principal ---------- */
+
+.contenedor {
   flex: 1;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1.5rem 1rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.panel {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2rem;
 }
 
-#input,
-#output {
-  width: 100%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-textarea {
-  width: 100%;
-  padding: 0.75rem;
-  font-size: 1.3rem;
-  text-align: center;
-  border: 2px solid var(--verde);
-  border-radius: 5px;
-  resize: vertical;
-}
-
-textarea:focus {
-  outline: 3px solid var(--blanco);
-  outline-offset: 2px;
-}
+/* ---------- Entrada ---------- */
 
 #inputText {
-  background-color: var(--negro);
-  color: var(--blanco);
+  width: 100%;
+  min-height: 12rem;
+  flex: 1;
+  resize: none;
+  border: none;
+  font-size: 1.75rem;
+  line-height: 1.4;
+  color: var(--texto);
+  overflow-wrap: anywhere;
 }
 
-#outputText {
-  background-color: var(--naranja);
-  color: var(--negro);
+#inputText::placeholder {
+  color: var(--azul);
+  opacity: 0.55;
 }
 
-#outputText::placeholder {
-  color: hsl(0, 0%, 25%);
+#inputText:focus {
+  outline: none;
+}
+
+.pista {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+.pista svg {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  fill: var(--texto-suave);
 }
 
 .botones {
   display: flex;
-  gap: 0.75rem;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
 .botones .button {
   flex: 1;
 }
 
-.button {
-  padding: 0.5rem 0.75rem;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--negro);
-  background-color: var(--verde);
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.15s, transform 0.1s;
-}
-
-.button:hover {
-  background-color: var(--verde-oscuro);
-}
-
-.button:active {
-  transform: scale(0.97);
-}
-
-.button:focus-visible {
-  outline: 3px solid var(--blanco);
-  outline-offset: 2px;
-}
-
 #mensaje {
   min-height: 1.5em;
-  text-align: center;
-  font-size: 1rem;
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
 #mensaje[data-tipo="aviso"] {
@@ -129,21 +145,120 @@ textarea:focus {
   color: var(--error);
 }
 
-#image img {
-  width: 100%;
-  max-width: 220px;
-  height: auto;
+/* ---------- Botones ---------- */
+
+.button {
+  padding: 1.1rem 1.5rem;
+  border-radius: var(--radio);
+  border: 1px solid var(--azul);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s, transform 0.1s;
 }
 
-footer {
-  padding: 1rem;
-  font-size: 1rem;
+.button--primario {
+  background-color: var(--azul);
+  color: #fff;
+}
+
+.button--primario:hover {
+  background-color: var(--azul-hover);
+}
+
+.button--secundario {
+  background-color: var(--azul-suave);
+  color: var(--azul);
+}
+
+.button--secundario:hover {
+  background-color: #d3dff2;
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 3px;
+}
+
+/* ---------- Salida ---------- */
+
+.panel--salida {
+  min-height: 16rem;
+  padding: 2rem 1.5rem;
+  background-color: var(--superficie);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+
+.vacio {
+  margin: auto;
   text-align: center;
 }
 
-footer a {
+.vacio img {
+  display: none; /* en celular se oculta para ahorrar espacio */
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin: 0 auto 2rem;
+}
+
+.vacio h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.vacio p {
+  margin-top: 0.5rem;
+  color: var(--texto-suave);
+}
+
+.resultado {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+#outputText {
+  width: 100%;
+  min-height: 10rem;
+  flex: 1;
+  resize: none;
+  border: none;
+  font-size: 1.15rem;
+  color: var(--texto-suave);
+  overflow-wrap: anywhere;
+}
+
+#outputText:focus {
+  outline: none;
+}
+
+/* Muestra el estado vacío o el resultado según data-estado */
+.panel--salida[data-estado="vacio"] .resultado,
+.panel--salida[data-estado="resultado"] .vacio {
+  display: none;
+}
+
+/* ---------- Pie ---------- */
+
+.footer {
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--texto-suave);
+}
+
+.footer a {
   display: inline; /* reset.css pone los enlaces en block */
-  color: var(--verde);
+  color: var(--azul);
+  font-weight: 600;
   text-decoration: underline;
 }
 
@@ -157,18 +272,39 @@ footer a {
   white-space: nowrap;
 }
 
-/* ESCRITORIO: las tres columnas en fila */
+/* ---------- Tablet ---------- */
+
+@media (min-width: 768px) {
+  .header,
+  .contenedor {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  #inputText {
+    min-height: 18rem;
+    font-size: 2rem;
+  }
+
+  .vacio img {
+    display: block;
+  }
+}
+
+/* ---------- Escritorio: dos columnas ---------- */
+
 @media (min-width: 1024px) {
-  main {
-    flex-direction: row;
-    justify-content: space-around;
+  .contenedor {
+    grid-template-columns: 1fr 400px;
+    gap: 3rem;
+    padding-top: 2.5rem;
   }
 
-  #image img {
-    max-width: 336px;
+  #inputText {
+    min-height: 0;
   }
 
-  textarea {
-    min-height: 14rem;
+  .panel--salida {
+    min-height: 600px;
   }
 }

@@ -22,7 +22,7 @@ Ejemplo: `gato` → `gaitober` → `gato`
 - Encriptar y desencriptar texto.
 - Copiar el resultado al portapapeles con un botón.
 - Convierte mayúsculas y quita acentos automáticamente (y avisa cuando lo hace).
-- Diseño responsive: una columna en celulares y tres columnas en escritorio.
+- Diseño responsive: una columna en celulares y dos columnas en escritorio.
 
 ## Tecnologías
 

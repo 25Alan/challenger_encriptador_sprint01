@@ -5,51 +5,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Encriptador y desencriptador de textos - Challenge Oracle ONE / Alura">
+    <meta name="theme-color" content="#f3f5fc">
 
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     <title>Encriptador</title>
 </head>
 
 <body>
-    <header>
-        <h1>ENCRIPTADOR</h1>
+    <header class="header">
+        <div class="logo">
+            <svg class="logo__icono" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 10V7a5 5 0 0 1 10 0v3" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" />
+                <rect x="4" y="10" width="16" height="11" rx="3" />
+            </svg>
+            <h1>Encriptador</h1>
+        </div>
     </header>
 
-    <main>
-        <section id="input">
+    <main class="contenedor">
+        <section class="panel panel--entrada">
             <label for="inputText" class="visually-hidden">Texto a encriptar o desencriptar</label>
-            <textarea name="inputText" id="inputText" rows="8"
-                placeholder="INGRESAR TEXTO SIN ACENTOS Y EN MINÚSCULAS"></textarea>
+            <textarea id="inputText" name="inputText" placeholder="Ingresá el texto aquí" autofocus></textarea>
+
+            <p class="pista">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 7v6M12 16.5v.5" stroke="#fff" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                Solo letras minúsculas y sin acentos.
+            </p>
 
             <div class="botones">
-                <button type="button" class="button" id="buttonEncriptar">ENCRIPTAR</button>
-                <button type="button" class="button" id="buttonDesencriptar">DESENCRIPTAR</button>
+                <button type="button" class="button button--primario" id="buttonEncriptar">Encriptar</button>
+                <button type="button" class="button button--secundario" id="buttonDesencriptar">Desencriptar</button>
             </div>
 
             <p id="mensaje" role="status" aria-live="polite"></p>
         </section>
 
-        <section id="image">
-            <img src="./image/muneco.svg" alt="" width="336" height="304">
-        </section>
+        <section class="panel panel--salida" id="panelSalida" data-estado="vacio">
+            <div class="vacio">
+                <img src="./img/muneco.svg" alt="" width="336" height="304">
+                <h2>Ningún mensaje fue encontrado</h2>
+                <p>Ingresá el texto que desees encriptar o desencriptar.</p>
+            </div>
 
-        <section id="output">
-            <label for="outputText" class="visually-hidden">Resultado</label>
-            <textarea name="outputText" id="outputText" rows="8" readonly
-                placeholder="EL RESULTADO APARECERÁ AQUÍ"></textarea>
-
-            <button type="button" class="button" id="buttonCopy">COPIAR</button>
+            <div class="resultado">
+                <label for="outputText" class="visually-hidden">Resultado</label>
+                <textarea id="outputText" name="outputText" readonly></textarea>
+                <button type="button" class="button button--secundario" id="buttonCopy">Copiar</button>
+            </div>
         </section>
     </main>
 
-    <footer>
-        &copy; Romero Alan - GitHub: <a href="https://github.com/25Alan" target="_blank" rel="noopener">25Alan</a>
+    <footer class="footer">
+        &copy; Romero Alan · <a href="https://github.com/25Alan" target="_blank" rel="noopener">GitHub</a>
     </footer>
 
     <script src="./js/script.js" type="module"></script>

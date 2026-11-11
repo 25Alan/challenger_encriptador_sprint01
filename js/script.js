@@ -30,6 +30,7 @@ function normalizar(texto) {
 const inputText = document.querySelector("#inputText");
 const outputText = document.querySelector("#outputText");
 const mensaje = document.querySelector("#mensaje");
+const panelSalida = document.querySelector("#panelSalida");
 const buttonEncriptar = document.querySelector("#buttonEncriptar");
 const buttonDesencriptar = document.querySelector("#buttonDesencriptar");
 const buttonCopy = document.querySelector("#buttonCopy");
@@ -44,6 +45,7 @@ function procesar(transformar) {
 
   if (original.trim() === "") {
     outputText.value = "";
+    panelSalida.dataset.estado = "vacio";
     mostrarMensaje("No ingresó ningún texto.", "error");
     inputText.focus();
     return;
@@ -51,6 +53,7 @@ function procesar(transformar) {
 
   const limpio = normalizar(original);
   outputText.value = transformar(limpio);
+  panelSalida.dataset.estado = "resultado";
 
   if (limpio !== original) {
     mostrarMensaje("Se convirtieron mayúsculas y acentos automáticamente.", "aviso");
@@ -67,8 +70,8 @@ async function copiarTexto() {
 
   try {
     await navigator.clipboard.writeText(outputText.value);
-    buttonCopy.textContent = "¡COPIADO!";
-    setTimeout(() => (buttonCopy.textContent = "COPIAR"), 1500);
+    buttonCopy.textContent = "¡Copiado!";
+    setTimeout(() => (buttonCopy.textContent = "Copiar"), 1500);
   } catch {
     // Por ejemplo, si la página no se sirve por https o el navegador lo bloquea
     outputText.select();
