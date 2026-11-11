@@ -1,118 +1,174 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* El reset de margin/padding/box-sizing ya está en reset.css */
+
+:root {
+  --fondo: hsl(228, 53%, 19%);
+  --verde: hsl(99, 96%, 51%);
+  --verde-oscuro: hsl(99, 80%, 40%);
+  --naranja: hsl(36, 100%, 51%);
+  --negro: hsl(0, 0%, 0%);
+  --blanco: hsl(0, 0%, 100%);
+  --aviso: hsl(50, 100%, 70%);
+  --error: hsl(0, 100%, 75%);
 }
 
 body {
-  background-color: hsl(228, 53%, 19%);
-  height: 100vh;
+  background-color: var(--fondo);
+  color: var(--blanco);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
 }
 
 header {
-  width: 100vw;
-  height: 15vh;
-  font-size: 2rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 1.5rem 1rem;
   text-align: center;
   font-family: "Anek Telugu", sans-serif;
 }
 
 header h1 {
-  color: white;
-  font-size: 3rem;
-  font-weight: bold;
+  color: var(--blanco);
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-weight: 700;
 }
 
 main {
-  width: 100vw;
-  height: 80vh;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  color: black;
-}
-
-#input {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  gap: 2rem;
+}
+
+#input,
+#output {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+textarea {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1.3rem;
   text-align: center;
-  gap: 0.2rem;
+  border: 2px solid var(--verde);
+  border-radius: 5px;
+  resize: vertical;
+}
+
+textarea:focus {
+  outline: 3px solid var(--blanco);
+  outline-offset: 2px;
 }
 
 #inputText {
-  background-color: hsl(0, 0%, 0%);
-  font-size: 1.3rem;
-  border-radius: 5px;
-  border: 2px solid hsl(99, 96%, 51%);
-  color: hsl(0, 0%, 100%);
-  text-align: center;
-}
-
-#inputText:focus {
-  color: hsl(0, 0%, 0%);
-  background-color: hsl(136, 89%, 45%);
-}
-
-#containerbuttonInput {
-  width: 100%;
-  padding: 0.2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-}
-
-.button {
-  font-size: 1.5rem;
-  border: 2px none hsl(99, 96%, 51%);
-  border-radius: 3px;
-  background-color: hsl(99, 96%, 51%);
-}
-
-#output {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 0.2rem;
+  background-color: var(--negro);
+  color: var(--blanco);
 }
 
 #outputText {
-  background-color: hsl(36, 100%, 51%);
-  font-size: 1.3rem;
-  border-radius: 5px;
-  border: 2px solid hsl(99, 96%, 51%);
-  color: hsl(0, 0%, 0%);
-  text-align: center;
+  background-color: var(--naranja);
+  color: var(--negro);
 }
 
-#outputText:focus {
-  color: hsl(0, 100%, 50%);
-  background-color: hsl(136, 89%, 45%);
+#outputText::placeholder {
+  color: hsl(0, 0%, 25%);
+}
+
+.botones {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.botones .button {
+  flex: 1;
+}
+
+.button {
+  padding: 0.5rem 0.75rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--negro);
+  background-color: var(--verde);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.15s, transform 0.1s;
+}
+
+.button:hover {
+  background-color: var(--verde-oscuro);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--blanco);
+  outline-offset: 2px;
+}
+
+#mensaje {
+  min-height: 1.5em;
+  text-align: center;
+  font-size: 1rem;
+}
+
+#mensaje[data-tipo="aviso"] {
+  color: var(--aviso);
+}
+
+#mensaje[data-tipo="error"] {
+  color: var(--error);
+}
+
+#image img {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
 }
 
 footer {
-  height: 5vh;
-  font-size: 1.2rem;
-  color: white;
+  padding: 1rem;
+  font-size: 1rem;
   text-align: center;
 }
 
-/* RESPONSIVE */
-/* 
-@media (max-width: 768px) {
-  #image {
-    width: 40rem;
-    position: absolute;
-    z-index: -1;
+footer a {
+  display: inline; /* reset.css pone los enlaces en block */
+  color: var(--verde);
+  text-decoration: underline;
+}
+
+/* Oculta un elemento visualmente pero lo deja disponible para lectores de pantalla */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ESCRITORIO: las tres columnas en fila */
+@media (min-width: 1024px) {
+  main {
+    flex-direction: row;
+    justify-content: space-around;
   }
-} */
+
+  #image img {
+    max-width: 336px;
+  }
+
+  textarea {
+    min-height: 14rem;
+  }
+}

@@ -1,53 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Encriptador y desencriptador de textos - Challenge Oracle ONE / Alura">
 
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/style.css">
- 
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@100;200;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anek+Telugu:wght@700&display=swap" rel="stylesheet">
 
-    <title>ENCRIPTADOR</title>
+    <title>Encriptador</title>
 </head>
+
 <body>
     <header>
-        <h1 id="h1">ENCRIPTADOR</h1>
+        <h1>ENCRIPTADOR</h1>
     </header>
+
     <main>
         <section id="input">
-            <textarea name="inputText" id="inputText" cols="30" rows="10"
-                placeholder="INGRESAR TEXTO SIN ACENTOS Y EN MINUSCULAS" required></textarea>
+            <label for="inputText" class="visually-hidden">Texto a encriptar o desencriptar</label>
+            <textarea name="inputText" id="inputText" rows="8"
+                placeholder="INGRESAR TEXTO SIN ACENTOS Y EN MINÚSCULAS"></textarea>
 
-                <div id="containerbuttonInput">
-                    <button class="button" id="buttonInput">ENCRIPTAR</button>
-                    <button class="button" id="buttonOutput">DESENCRIPTAR</button>
-                </div>
+            <div class="botones">
+                <button type="button" class="button" id="buttonEncriptar">ENCRIPTAR</button>
+                <button type="button" class="button" id="buttonDesencriptar">DESENCRIPTAR</button>
+            </div>
+
+            <p id="mensaje" role="status" aria-live="polite"></p>
         </section>
 
         <section id="image">
-            <img src="./image/Muñeco.svg" alt="chicoLupa">
+            <img src="./image/muneco.svg" alt="" width="336" height="304">
         </section>
 
         <section id="output">
-            <textarea name="outputText" id="outputText" cols="30" rows="10" readonly></textarea>
-            
-            <button class="button" id="buttonCopy">COPY</button>
+            <label for="outputText" class="visually-hidden">Resultado</label>
+            <textarea name="outputText" id="outputText" rows="8" readonly
+                placeholder="EL RESULTADO APARECERÁ AQUÍ"></textarea>
+
+            <button type="button" class="button" id="buttonCopy">COPIAR</button>
         </section>
     </main>
 
     <footer>
-        &#169 Copyright Romero Alan - Github : 25Alan
+        &copy; Romero Alan - GitHub: <a href="https://github.com/25Alan" target="_blank" rel="noopener">25Alan</a>
     </footer>
 
     <script src="./js/script.js" type="module"></script>
-    <script src="./js/responsive.js" type="module"></script>
 </body>
 
 </html>

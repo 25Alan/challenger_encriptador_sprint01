@@ -1,93 +1,81 @@
-import { responsiveMedia } from "./responsive.js";
+// Llaves de encriptación del desafío
+const LLAVES = { e: "enter", i: "imes", a: "ai", o: "ober", u: "ufat" };
 
-const buttonEncriptar = document.querySelector("#buttonInput");
-const buttonDesencriptar = document.querySelector("#buttonOutput");
+// Mapa inverso: "enter" -> "e", "imes" -> "i", ...
+const LLAVES_INVERSAS = Object.fromEntries(
+  Object.entries(LLAVES).map(([letra, clave]) => [clave, letra])
+);
+
+// Regex para desencriptar: busca todas las claves en UNA sola pasada.
+// Así un reemplazo nunca genera texto que otro reemplazo vuelva a modificar
+// (antes "llames" -> "llaimenters" se desencriptaba como "lla").
+const REGEX_CLAVES = new RegExp(Object.values(LLAVES).join("|"), "g");
+
+export function encriptar(texto) {
+  return texto.replace(/[aeiou]/g, (letra) => LLAVES[letra]);
+}
+
+export function desencriptar(texto) {
+  return texto.replace(REGEX_CLAVES, (clave) => LLAVES_INVERSAS[clave]);
+}
+
+// Pasa a minúsculas y quita acentos (á -> a, ü -> u, ñ -> n)
+function normalizar(texto) {
+  return texto
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "");
+}
+
+const inputText = document.querySelector("#inputText");
+const outputText = document.querySelector("#outputText");
+const mensaje = document.querySelector("#mensaje");
+const buttonEncriptar = document.querySelector("#buttonEncriptar");
+const buttonDesencriptar = document.querySelector("#buttonDesencriptar");
 const buttonCopy = document.querySelector("#buttonCopy");
 
-function encriptarText() {
-  let textResult = document.querySelector("#inputText").value;
-
-  textResult = textResult.toLowerCase();
-  textResult = removeAcentos(textResult);
-  textResult = textResult.replace(/e/gm, "enter");
-  textResult = textResult.replace(/i/gm, "imes");
-  textResult = textResult.replace(/a/gm, "ai");
-  textResult = textResult.replace(/o/gm, "ober");
-  textResult = textResult.replace(/u/gm, "ufat");
-
-  if (textResult.length === 0 || /^\s+$/.test(textResult)) {
-    textResult = "No ingresó una palabra";
-  }
-
-  document.querySelector("#outputText").innerHTML = textResult;
+function mostrarMensaje(texto, tipo = "info") {
+  mensaje.textContent = texto;
+  mensaje.dataset.tipo = tipo;
 }
 
-function desencriptarText() {
-  let textResultDes = document.querySelector("#inputText").value;
+function procesar(transformar) {
+  const original = inputText.value;
 
-  textResultDes = textResultDes.toLowerCase();
-  textResultDes = removeAcentos(textResultDes);
-  textResultDes = textResultDes.replace(/enter/g, "e");
-  textResultDes = textResultDes.replace(/imes/g, "i");
-  textResultDes = textResultDes.replace(/ai/g, "a");
-  textResultDes = textResultDes.replace(/ober/g, "o");
-  textResultDes = textResultDes.replace(/ufat/g, "u");
+  if (original.trim() === "") {
+    outputText.value = "";
+    mostrarMensaje("No ingresó ningún texto.", "error");
+    inputText.focus();
+    return;
+  }
 
-  document.querySelector("#outputText").innerHTML = textResultDes;
+  const limpio = normalizar(original);
+  outputText.value = transformar(limpio);
 
-  if (textResultDes.length === 0 || /^\s+$/.test(textResultDes)) {
-    document.querySelector("#outputText").innerHTML = "NO INGRESÓ PALABRAS";
+  if (limpio !== original) {
+    mostrarMensaje("Se convirtieron mayúsculas y acentos automáticamente.", "aviso");
+  } else {
+    mostrarMensaje("");
   }
 }
 
-function copyText() {
-  const copyText = document.querySelector("#outputText").textContent;
-  navigator.clipboard.writeText(copyText);
+async function copiarTexto() {
+  if (outputText.value === "") {
+    mostrarMensaje("No hay nada para copiar.", "error");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(outputText.value);
+    buttonCopy.textContent = "¡COPIADO!";
+    setTimeout(() => (buttonCopy.textContent = "COPIAR"), 1500);
+  } catch {
+    // Por ejemplo, si la página no se sirve por https o el navegador lo bloquea
+    outputText.select();
+    mostrarMensaje("No se pudo copiar. Use Ctrl+C sobre el texto seleccionado.", "error");
+  }
 }
 
-function removeAcentos(stringModificado) {
-  var chars = {
-    á: "a",
-    é: "e",
-    í: "i",
-    ó: "o",
-    ú: "u",
-    à: "a",
-    è: "e",
-    ì: "i",
-    ò: "o",
-    ù: "u",
-    ñ: "n",
-    Á: "A",
-    É: "E",
-    Í: "I",
-    Ó: "O",
-    Ú: "U",
-    À: "A",
-    È: "E",
-    Ì: "I",
-    Ò: "O",
-    Ù: "U",
-    Ñ: "N",
-  };
-  var expr = /[áàéèíìóòúùñ]/gi;
-  var res = stringModificado.replace(expr, function (e) {
-    return chars[e];
-  });
-  return res;
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  buttonEncriptar.addEventListener("click", encriptarText);
-  buttonDesencriptar.addEventListener("click", desencriptarText);
-  buttonCopy.addEventListener("click", copyText);
-  responsiveMedia(
-    "h1",
-    "(min-width: 1024px)",
-    `<h1>ENCRIPTADOR - MOBILE</h1>`,
-    `<h1>ENCRIPTADOR - ESCRITORIO</h1>`
-  );
-});
-
-// DIFERENCIA ENTRE LOAD Y DOMCONTENTLOADED
-//DOMContentLoaded – el navegador HTML está completamente cargado y el árbol DOM está construido, pero es posible que los recursos externos como <img> y hojas de estilo aún no se hayan cargado. load – no solo se cargó el HTML, sino también todos los recursos externos: imágenes, estilos, etc
+buttonEncriptar.addEventListener("click", () => procesar(encriptar));
+buttonDesencriptar.addEventListener("click", () => procesar(desencriptar));
+buttonCopy.addEventListener("click", copiarTexto);
